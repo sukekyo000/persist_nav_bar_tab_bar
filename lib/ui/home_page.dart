@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../state/bottom_nav.dart';
+import '../state/detail_tab.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -21,6 +22,7 @@ class HomePage extends ConsumerWidget {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
+              ref.read(selectTabBarProvider.notifier).changeTabForDetail1();
               bottomNavController.jumpToTab(1);
             },
             child: const Text("Detail1"),
@@ -28,6 +30,7 @@ class HomePage extends ConsumerWidget {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
+              ref.read(selectTabBarProvider.notifier).changeTabForDetail2();
               bottomNavController.jumpToTab(1);
             },
             child: const Text("Detail2"),
@@ -35,6 +38,7 @@ class HomePage extends ConsumerWidget {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
+              ref.read(selectTabBarProvider.notifier).changeTabForDetail3();
               bottomNavController.jumpToTab(1);
             },
             child: const Text("Detail3"),

@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:persist_nav_bar_tab_bar/state/detail_tab.dart';
 
-class DetailPage extends StatelessWidget {
+import '../state/bottom_nav.dart';
+
+class DetailPage extends StatefulWidget {
   const DetailPage({super.key});
+  @override
+  _DetailPageState createState() => _DetailPageState();
+}
 
+class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
+    final tabController = TabController(length: 3, vsync: this);
+
+    return Consumer(builder: (context, ref, child) {
+      final tabIndex = ref.watch(selectTabBarProvider);
+      tabController.index = tabIndex;
+
+      return Scaffold(
         appBar: AppBar(
-          title: const TabBar(
-            tabs: [
+          title: TabBar(
+            controller: tabController,
+            tabs: const [
               Tab(
                 icon: Text("Detail 1"),
               ),
@@ -23,8 +36,9 @@ class DetailPage extends StatelessWidget {
             ],
           ),
         ),
-        body: const TabBarView(
-          children: [
+        body: TabBarView(
+          controller: tabController,
+          children: const [
             Center(
               child: Text("Detail 1"),
             ),
@@ -36,7 +50,7 @@ class DetailPage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
+      );
+    });
   }
 }
