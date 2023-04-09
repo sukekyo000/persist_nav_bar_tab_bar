@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomePage extends StatelessWidget {
+import '../state/bottom_nav.dart';
+
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final bottomNavController = ref.read(bottomNavControllerProvider);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -15,17 +20,23 @@ class HomePage extends StatelessWidget {
           const Text("Home"),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              bottomNavController.jumpToTab(1);
+            },
             child: const Text("Detail1"),
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              bottomNavController.jumpToTab(1);
+            },
             child: const Text("Detail2"),
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              bottomNavController.jumpToTab(1);
+            },
             child: const Text("Detail3"),
           ),
         ]),

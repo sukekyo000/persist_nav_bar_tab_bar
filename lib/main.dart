@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent-tab-view.dart';
 
 import 'ui/detail_page.dart';
 import 'ui/home_page.dart';
+import 'state/bottom_nav.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -21,10 +27,12 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends ConsumerWidget {
   const MyHomePage({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.watch(bottomNavControllerProvider);
+
     final pages = [
       const HomePage(),
       const DetailPage(),
@@ -33,7 +41,7 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: PersistentTabView(
         context,
-        controller: PersistentTabController(initialIndex: 0),
+        controller: controller,
         screens: pages,
         items: [
           PersistentBottomNavBarItem(
@@ -45,27 +53,7 @@ class MyHomePage extends StatelessWidget {
             title: "Detail",
           ),
         ],
-        confineInSafeArea: true,
         backgroundColor: Colors.white,
-        handleAndroidBackButtonPress: true,
-        resizeToAvoidBottomInset: true,
-        stateManagement: true,
-        hideNavigationBarWhenKeyboardShows: true,
-        decoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          colorBehindNavBar: Colors.pink,
-        ),
-        popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: const ItemAnimationProperties(
-          duration: Duration(milliseconds: 200),
-          curve: Curves.ease,
-        ),
-        screenTransitionAnimation: const ScreenTransitionAnimation(
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 200),
-        ),
         navBarStyle: NavBarStyle.style1,
       ),
     );
